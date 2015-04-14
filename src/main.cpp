@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include "Image.h"
+
 using namespace std;
 
 
@@ -14,7 +16,7 @@ int main(int argc,  const char* argv[]) {
     string outputName = argv[argc-1];
 
     if (command == "-a") { // Add
-
+        Image add(image1Name);
     } else if (command == "-s") { // Subtract
 
     } else if (command == "-i") { // Invert
