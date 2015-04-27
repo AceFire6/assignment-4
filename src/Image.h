@@ -131,6 +131,16 @@ namespace MLLJET001 {
             return result;
         }
 
+        Image operator*(const int threshold) {
+            Image result(*this);
+            ImageIterator imgIter = result.begin();
+            while (imgIter != result.end()) {
+                *imgIter = (unsigned char) ((*imgIter > threshold) ? 255 : 0);
+                imgIter++;
+            }
+            return result;
+        }
+
         class ImageIterator {
         private:
             unsigned char *pointer;
