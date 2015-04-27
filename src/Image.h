@@ -13,7 +13,7 @@ namespace MLLJET001 {
         // Testing constructor
         Image(int width, int height, unsigned char * valBuffer): width(width),
                                                                  height(height),
-                                                                 imageData(std::unique_ptr(valBuffer)) {}
+                                                                 imageData(std::unique_ptr<unsigned char []>(valBuffer)) {}
 
         // Load the file in and parse it.
         void load(std::string file);
