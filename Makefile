@@ -18,13 +18,13 @@ default: $(OBJECTS)
 	$(CC) -c $< -o $@ $(FLAGS)
 
 clean:
-	rm -f $(OBJECTS) build/$(EXE_NAME) build/Tests/test
+	rm -f $(OBJECTS) build/$(EXE_NAME) build/test
 
 run: default
 	cd ./build && ./$(EXE_NAME) $(ARGS)
 
 tests: $(OBJECTS)
-	$(CC) $(TEST_SOURCES) -o build/Tests/test $(FLAGS)
+	$(CC) $(TEST_SOURCES) -o build/test $(FLAGS)
 
 run-tests: tests
-	cd ./build/Tests && ./test
+	cd ./build && ./test
