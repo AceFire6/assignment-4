@@ -9,11 +9,9 @@ namespace MLLJET001 {
     class Image {
     public:
         Image();
-
-        // Testing constructor
-        Image(int width, int height, unsigned char * valBuffer): width(width),
-                                                                 height(height),
-                                                                 imageData(std::unique_ptr<unsigned char []>(valBuffer)) {}
+        Image(std::string file) {
+            this->load(file);
+        }
 
         // Load the file in and parse it.
         void load(std::string file);
@@ -154,6 +152,23 @@ namespace MLLJET001 {
                 imgIter++;
             }
             return result;
+        }
+
+        // Comparison operator ==
+        bool operator==(const Image img) {
+            if (this->height != img.height || this->width != img.width) {
+                return false;
+            }
+            ImageIterator imgIter = this->begin();
+            ImageIterator otherIter = img.begin();
+            while (imgIter != this->end()) {
+                if (*imgIter != *otherIter) {
+                    return false;
+                }
+                imgIter++;
+                otherIter++;
+            }
+            return true;
         }
 
         // Operator that shortcuts to save the image with the filename given by the string.
