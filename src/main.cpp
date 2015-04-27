@@ -17,30 +17,25 @@ int main(int argc,  const char* argv[]) {
     MLLJET001::Image img1;
     img1 << image1Name;
 
+    MLLJET001::Image img2;
+
     string outputName = argv[argc-1];
     MLLJET001::Image imgOut;
 
     if (command == "-a") { // Add
-        MLLJET001::Image img2;
         img2 << argv[3];
-
         imgOut = img1 + img2;
     } else if (command == "-s") { // Subtract
-        MLLJET001::Image img2;
         img2 << argv[3];
-
         imgOut = img1 - img2;
     } else if (command == "-i") { // Invert
         imgOut = !img1;
         imgOut >> outputName;
     } else if (command == "-l") { // Mask
-        MLLJET001::Image img2;
         img2 << argv[3];
-
         imgOut = img1 / img2;
     } else if (command == "-t") { // Threshold
         int threshold = stoi(argv[3]);
-
         imgOut = img1 * threshold;
     } else {
         cout << "Command: " << command << " not recognized.";
