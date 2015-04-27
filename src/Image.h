@@ -8,12 +8,12 @@
 namespace MLLJET001 {
     class Image {
     public:
-        Image(std::string fileName): filename(fileName) {};
+        Image();
 
         ~Image();
 
-        void load();
-        void save();
+        void load(std::string file);
+        void save(std::string file);
 
         std::string filename;
         int width;
@@ -25,7 +25,7 @@ namespace MLLJET001 {
             this->filename = rhs.filename;
             this->width = rhs.width;
             this->height = rhs.height;
-            this->load();
+            this->load(this->filename);
         }
 
         // Move Constructor
@@ -40,7 +40,7 @@ namespace MLLJET001 {
         Image &operator=(const Image &rhs) {
             this->width = rhs.width;
             this->height = rhs.height;
-            this->load();
+            this->load(rhs.filename);
             return *this;
         }
 
@@ -52,12 +52,13 @@ namespace MLLJET001 {
         }
 
         Image operator+=(const Image &image) {
-            ImageIterator imgIter(imageData.get());
+            ImageIterator imgIter = this->begin();
             ImageIterator otherIter = image.begin();
             while (imgIter != this->end()) {
-                *imgIter = *imgIter + *otherIter;
-                if (*imgIter > 255) {
+                if ((*imgIter + *otherIter) > 255) {
                     *imgIter = 255;
+                } else {
+                    *imgIter = *imgIter + *otherIter;
                 }
                 imgIter++;
                 otherIter++;
@@ -76,12 +77,13 @@ namespace MLLJET001 {
         }
 
         Image operator-=(const Image &image) {
-            ImageIterator imgIter(imageData.get());
+            ImageIterator imgIter = this->begin();
             ImageIterator otherIter = image.begin();
             while (imgIter != end()) {
-                *imgIter = *imgIter - *otherIter;
-                if (*imgIter < 0) {
+                if ((*imgIter - *otherIter) < 0) {
                     *imgIter = 0;
+                } else {
+                    *imgIter = *imgIter - *otherIter;
                 }
                 imgIter++;
                 otherIter++;
@@ -140,9 +142,6 @@ namespace MLLJET001 {
 
             ImageIterator &operator++() {
                 ++counter;
-                if (counter > 255) {
-                    counter = 255;
-                }
                 return *this;
             }
 
@@ -154,9 +153,6 @@ namespace MLLJET001 {
 
             ImageIterator &operator--() {
                 --counter;
-                if (counter < 0) {
-                    counter = 0;
-                }
                 return *this;
             }
 
@@ -182,11 +178,11 @@ namespace MLLJET001 {
         };
 
         ImageIterator begin() const {
-            return ImageIterator(imageData.get());
+            return ImageIterator(this->imageData.get());
         }
 
         ImageIterator end() {
-            return ImageIterator(imageData.get(), width * height);
+            return ImageIterator(this->imageData.get(), width * height);
         }
     };
 }
