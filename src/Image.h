@@ -121,12 +121,12 @@ namespace MLLJET001 {
 
         Image operator!() {
             Image result(*this);
-            ImageIterator imgIter(result.imageData.get());
-            while (imgIter != end()) {
+            ImageIterator imgIter = result.begin();
+            while (imgIter != result.end()) {
                 *imgIter = (unsigned char) (255 - *imgIter);
                 imgIter++;
             }
-            return *this;
+            return result;
         }
 
         class ImageIterator {
