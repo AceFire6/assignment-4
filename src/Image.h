@@ -10,8 +10,6 @@ namespace MLLJET001 {
     public:
         Image();
 
-        ~Image();
-
         void load(std::string file);
         void save(std::string file);
 

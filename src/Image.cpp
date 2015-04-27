@@ -15,10 +15,6 @@ namespace MLLJET001 {
         filename = "";
     }
 
-    Image::~Image() {
-        // TODO delete [] imageData.get();
-    }
-
     void Image::save(std::string file) {
         std::ofstream imgOut(file, std::ios::out | std::ios::binary);
         if (!imgOut.is_open()) {
