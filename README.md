@@ -1,5 +1,5 @@
-CSC3022H - Assignment 4
-Jethro Muller - MLLJET001
+# CSC3022H - Assignment 4  
+# Jethro Muller - MLLJET001
 
 ----------
 
@@ -13,10 +13,10 @@ functionality of the code.
 
 ### Files:
 
-* Image.cpp: The main file of the Image class.
-* Image.h: The header file of the Image class.
-* main.cpp: The driver file. Argument parsing happens here.
-* Unittests.cpp: This is where the catch unit tests are defined.
-* catch.hpp: This runs the unit tests.
-* build/ : This is where the built files go. Images for testing can
+* `src/Image.cpp`: The main file of the Image class.
+* `src/Image.h`: The header file of the Image class.
+* `src/main.cpp`: The driver file. Argument parsing happens here.
+* `src/Unittests.cpp`: This is where the catch unit tests are defined.
+* `src/catch.hpp`: This runs the unit tests.
+* `build/`: This is where the built files go. Images for testing can
 be found inside.
