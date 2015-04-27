@@ -151,6 +151,16 @@ namespace MLLJET001 {
             return result;
         }
 
+        // Operator that shortcuts to save the image with the filename given by the string.
+        void operator>>(const std::string file) {
+            this->save(file);
+        }
+
+        // Operator that shortcuts to load the image with the filename given by the string.
+        void operator<<(const std::string file) {
+            this->load(file);
+        }
+
         // Iterator used for the image operations.
         class ImageIterator {
         private:
