@@ -10,6 +10,11 @@ namespace MLLJET001 {
     public:
         Image();
 
+        // Testing constructor
+        Image(int width, int height, unsigned char * valBuffer): width(width),
+                                                                 height(height),
+                                                                 imageData(std::unique_ptr(valBuffer)) {}
+
         // Load the file in and parse it.
         void load(std::string file);
         // Save the file to the given path.
