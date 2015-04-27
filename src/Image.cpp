@@ -22,6 +22,7 @@ namespace MLLJET001 {
             exit(0);
         }
 
+        // The PGM file header.
         imgOut << "P5" << endl;
         imgOut << "# " << file << endl;
         imgOut << width << " " << height << endl;
@@ -48,7 +49,7 @@ namespace MLLJET001 {
             getline(imgFile, line);
             if (line[0] == '#' || line == "P5") {
                 continue;
-            } else if (line == "255") {
+            } else if (line == "255") { // The last line of the header.
                 break;
             } else {
                 stringstream ss(line);

@@ -10,12 +10,16 @@ namespace MLLJET001 {
     public:
         Image();
 
+        // Load the file in and parse it.
         void load(std::string file);
+        // Save the file to the given path.
         void save(std::string file);
 
+        // The name of the image file the object holds data of.
         std::string filename;
         int width;
         int height;
+        // A unique ptr to the actual image data from the pgm file.
         std::unique_ptr<unsigned char[]> imageData;
 
         // Copy Constructor
@@ -34,7 +38,7 @@ namespace MLLJET001 {
             this->imageData = std::move(rhs.imageData);
         }
 
-// Copy and Move Assignment Operators
+        // Copy Assignment Operator
         Image &operator=(const Image &rhs) {
             this->width = rhs.width;
             this->height = rhs.height;
@@ -42,6 +46,7 @@ namespace MLLJET001 {
             return *this;
         }
 
+        // Move Assignment Operator
         Image &operator=(Image &&rhs) {
             this->width = rhs.width;
             this->height = rhs.height;
@@ -49,6 +54,7 @@ namespace MLLJET001 {
             return *this;
         }
 
+        // Used to add two images together. Clamps pixel values at 255.
         Image operator+=(const Image &image) {
             ImageIterator imgIter = this->begin();
             ImageIterator otherIter = image.begin();
@@ -64,6 +70,7 @@ namespace MLLJET001 {
             return *this;
         }
 
+        // Used to add two images together. Calls operator+=.
         Image operator+(const Image &image) {
             Image result(*this);
             if (result.width != image.width || result.height != image.height) {
@@ -74,6 +81,7 @@ namespace MLLJET001 {
             return result;
         }
 
+        // Used to subtract two images from each other. Clamps pixel values at 0.
         Image operator-=(const Image &image) {
             ImageIterator imgIter = this->begin();
             ImageIterator otherIter = image.begin();
@@ -89,6 +97,7 @@ namespace MLLJET001 {
             return *this;
         }
 
+        // Used to subtract two images from each other. Calls operator-=.
         Image operator-(const Image &image) {
             Image result(*this);
             if (result.width != image.width || result.height != image.height) {
@@ -99,6 +108,7 @@ namespace MLLJET001 {
             return result;
         }
 
+        // Masking operator. If the mask's pixel value is 0, the pixel value is set to 0 too.
         Image operator/(const Image &image) {
             Image result(*this);
             if (result.width != image.width || result.height != image.height) {
@@ -119,6 +129,7 @@ namespace MLLJET001 {
             return result;
         }
 
+        // Inversion operator. Inverts the image this is applied to. p = (255 - p)
         Image operator!() {
             Image result(*this);
             ImageIterator imgIter = result.begin();
@@ -129,6 +140,7 @@ namespace MLLJET001 {
             return result;
         }
 
+        // Threshold operator. Turns all pixels that surpass the given threshold white, everything else black.
         Image operator*(const int threshold) {
             Image result(*this);
             ImageIterator imgIter = result.begin();
@@ -139,58 +151,70 @@ namespace MLLJET001 {
             return result;
         }
 
+        // Iterator used for the image operations.
         class ImageIterator {
         private:
+            // A pointer to the image data.
             unsigned char *pointer;
-            int counter;
+            int index;
         public:
-            ImageIterator(unsigned char *ptr) : pointer(ptr), counter(0) { }
+            // Parametrized constructor that starts off at the beginning of the array.
+            ImageIterator(unsigned char *ptr) : pointer(ptr), index(0) { }
+            // Parametrized constructor that starts off at a given point in the array.
+            ImageIterator(unsigned char *ptr, int count) : pointer(ptr), index(count) { }
+            // Parametrized constructor that creates a copy of the supplied iterator.
+            ImageIterator(const ImageIterator &copyIter) : pointer(copyIter.pointer), index(copyIter.index){ }
 
-            ImageIterator(unsigned char *ptr, int count) : pointer(ptr), counter(count) { }
-
-            ImageIterator(const ImageIterator &copyIter) : pointer(copyIter.pointer) { }
-
+            // Increment the index of the interator.
             ImageIterator &operator++() {
-                ++counter;
+                ++index;
                 return *this;
             }
 
+            // Increment the index of the interator.
             ImageIterator operator++(int) {
                 ImageIterator tempIter(*this);
                 operator++();
                 return tempIter;
             }
 
+            // Decrement the index of the interator.
             ImageIterator &operator--() {
-                --counter;
+                --index;
                 return *this;
             }
 
+            // Decrement the index of the interator.
             ImageIterator operator--(int) {
                 ImageIterator tempIter(*this);
                 operator--();
                 return tempIter;
             }
 
+            // Dereference the value of the array at the given index.
             unsigned char &operator*() {
-                return pointer[counter];
+                return pointer[index];
             }
 
+            // Check to see if the iterators have the same index.
             bool operator!=(const ImageIterator &rhs) {
-                return counter != rhs.counter;
+                return index != rhs.index;
             }
 
+            // Move assignment operator.
             ImageIterator &operator=(const ImageIterator &rhs) {
                 this->pointer = std::move(rhs.pointer);
-                this->counter = rhs.counter;
+                this->index = rhs.index;
                 return *this;
             }
         };
 
+        // Get the iterator for the current image.
         ImageIterator begin() const {
             return ImageIterator(this->imageData.get());
         }
 
+        // Get the end of the iterator of the current image.
         ImageIterator end() {
             return ImageIterator(this->imageData.get(), width * height);
         }
