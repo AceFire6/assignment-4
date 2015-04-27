@@ -47,7 +47,7 @@ int main(int argc,  const char* argv[]) {
         imgOut = img1 * threshold;
         imgOut.save(outputName);
     } else {
-        cout << "Command not recognized.";
+        cout << "Command: " << command << " not recognized.";
     }
 
     return 0;
