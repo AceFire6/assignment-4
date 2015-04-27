@@ -6,7 +6,6 @@
 #include <string>
 #include <sstream>
 
-using namespace std;
 
 namespace MLLJET001 {
     Image::Image() {
@@ -18,15 +17,15 @@ namespace MLLJET001 {
     void Image::save(std::string file) {
         std::ofstream imgOut(file, std::ios::out | std::ios::binary);
         if (!imgOut.is_open()) {
-            cout << "Can't create file: " << file << endl;
+            std::cout << "Can't create file: " << file << std::endl;
             exit(0);
         }
 
         // The PGM file header.
-        imgOut << "P5" << endl;
-        imgOut << "# " << file << endl;
-        imgOut << width << " " << height << endl;
-        imgOut << "255" << endl;
+        imgOut << "P5" << std::endl;
+        imgOut << "# " << file << std::endl;
+        imgOut << width << " " << height << std::endl;
+        imgOut << "255" << std::endl;
 
         ImageIterator imgIter = this->begin();
         while (imgIter != this->end()) {
@@ -40,11 +39,11 @@ namespace MLLJET001 {
         this->filename = file;
         std::ifstream imgFile(file, std::ios::binary);
         if (!imgFile.is_open()) {
-            cout << "File " << file << " not found" << endl;
+            std::cout << "File " << file << " not found" << std::endl;
             exit(0);
         }
 
-        string line;
+        std::string line;
         while (!imgFile.eof()) {
             getline(imgFile, line);
             if (line[0] == '#' || line == "P5") {
@@ -52,18 +51,18 @@ namespace MLLJET001 {
             } else if (line == "255") { // The last line of the header.
                 break;
             } else {
-                stringstream ss(line);
-                string num;
+                std::stringstream ss(line);
+                std::string num;
                 getline(ss, num, ' ');
-                width = stoi(num);
+                width = std::stoi(num);
                 getline(ss, num, ' ');
-                height = stoi(num);
+                height = std::stoi(num);
             }
         }
         unsigned char *imageBytes = new unsigned char [height*width];
         imgFile.read((char *) imageBytes, height * width);
         imgFile.close();
 
-        imageData = unique_ptr<unsigned char []>(imageBytes);
+        imageData = std::unique_ptr<unsigned char []>(imageBytes);
     }
 }
