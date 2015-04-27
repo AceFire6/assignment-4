@@ -103,15 +103,17 @@ namespace MLLJET001 {
 
         Image operator/(const Image &image) {
             Image result(*this);
-            ImageIterator imgIter(result.imageData.get());
-            ImageIterator otherIter = image.begin();
             if (result.width != image.width || result.height != image.height) {
                 std::cout << "Images not of the same size." << std::endl;
                 exit(0);
             }
-            while (imgIter != end()) {
-                if (*otherIter == 0) {
 
+            ImageIterator imgIter = result.begin();
+            ImageIterator otherIter = image.begin();
+
+            while (imgIter != result.end()) {
+                if (*otherIter == 0) {
+                    *imgIter = 0;
                 }
                 imgIter++;
                 otherIter++;
