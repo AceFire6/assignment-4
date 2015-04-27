@@ -1,9 +1,9 @@
-# CSC3022H - Assignment 4  
-# Jethro Muller - MLLJET001
+#### CSC3022H - Assignment 4  
+##### Jethro Muller - MLLJET001
 
 ----------
 
-### Instructions:
+##### Instructions:
 
 1. Use `make run ARGS="<args>"` to run the program. <args> is what you'd
 normally put after the binary. (eg. `-a i1 i2 out.pgm`)
@@ -11,7 +11,7 @@ normally put after the binary. (eg. `-a i1 i2 out.pgm`)
 functionality of the code.
 3. Use `make clean` to delete all binary files.
 
-### Files:
+##### Files:
 
 * `src/Image.cpp`: The main file of the Image class.
 * `src/Image.h`: The header file of the Image class.
